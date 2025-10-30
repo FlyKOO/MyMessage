@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MyMessage</string>
+    <string name="default_sms_title">设置为默认短信应用</string>
+    <string name="default_sms_description">为了完整体验，请将 MyMessage 设置为默认短信应用。</string>
+    <string name="default_sms_confirm">立即设置</string>
+    <string name="permission_rationale">请授予短信和联系人权限以显示消息和联系人。</string>
+    <string name="inbox_title">收件箱</string>
+    <string name="contacts_title">联系人</string>
+    <string name="compose_message">发送短信</string>
+    <string name="search_hint">搜索</string>
+    <string name="reply">回复</string>
+    <string name="mark_read">标记为已读</string>
+    <string name="cancel">取消</string>
+    <string name="send">发送</string>
+    <string name="back">返回</string>
+    <string name="empty_messages">暂无消息</string>
+    <string name="empty_contacts">暂无联系人</string>
+    <string name="thread_title_unknown">未知联系人</string>
+    <string name="new_message_title">新建短信</string>
+    <string name="recipient_label">收件人</string>
+    <string name="message_body_label">内容</string>
+    <string name="recent_contacts">最近联系人</string>
+    <string name="use_contact">使用</string>
+</resources>
