@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
                             add(Manifest.permission.READ_SMS)
                             add(Manifest.permission.RECEIVE_SMS)
                             add(Manifest.permission.SEND_SMS)
-                            add(Manifest.permission.WRITE_SMS)
                             add(Manifest.permission.RECEIVE_MMS)
                             add(Manifest.permission.RECEIVE_WAP_PUSH)
                             add(Manifest.permission.READ_CONTACTS)
