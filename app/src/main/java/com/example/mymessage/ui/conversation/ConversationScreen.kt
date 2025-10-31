@@ -101,7 +101,7 @@ fun ConversationScreen(
 
 @Composable
 private fun MessageBubble(message: ConversationMessage) {
-    val alignment = if (message.isIncoming) Alignment.CenterStart else Alignment.CenterEnd
+    val alignment: Alignment.Horizontal = if (message.isIncoming) Alignment.Start else Alignment.End
     val bubbleColor = if (message.isIncoming) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.primary
     val textColor = if (message.isIncoming) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onPrimary
 

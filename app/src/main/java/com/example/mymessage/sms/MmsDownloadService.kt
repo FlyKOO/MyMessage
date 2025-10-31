@@ -1,14 +1,14 @@
 package com.example.mymessage.sms
 
-import android.net.Uri
-import android.os.Bundle
-import android.provider.Telephony
-class MmsDownloadService : Telephony.MmsService() {
-    override fun onDownloadMessage(messageUri: Uri?, p1: Int, p2: Bundle?): Int {
-        return Telephony.MmsService.RESULT_SUCCESS
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+
+class MmsDownloadService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        stopSelf(startId)
+        return START_NOT_STICKY
     }
 
-    override fun onSendMessage(messageUri: Uri?, p1: Bundle?): Int {
-        return Telephony.MmsService.RESULT_SUCCESS
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 }

@@ -1,27 +1,25 @@
 package com.example.mymessage.sms
 
+import android.app.Service
 import android.content.Intent
+import android.os.IBinder
 import android.provider.Telephony
 import android.telephony.SmsMessage
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MessagingService : Telephony.SmsReceiverService() {
-    private val notificationManager: SmsNotificationManager by lazy {
-        EntryPointAccessors.fromApplication(
-            applicationContext,
-            MessagingServiceEntryPoint::class.java
-        ).notificationManager()
-    }
+@AndroidEntryPoint
+class MessagingService : Service() {
+
+    @Inject lateinit var notificationManager: SmsNotificationManager
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && (intent.action == Telephony.Sms.Intents.SMS_DELIVER_ACTION || intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION)) {
             val messages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
             handleMessages(messages)
         }
-        return super.onStartCommand(intent, flags, startId)
+        stopSelf(startId)
+        return START_NOT_STICKY
     }
 
     private fun handleMessages(messages: Array<SmsMessage>) {
@@ -32,9 +30,5 @@ class MessagingService : Telephony.SmsReceiverService() {
         notificationManager.showIncomingMessage(threadId, address, body)
     }
 
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface MessagingServiceEntryPoint {
-        fun notificationManager(): SmsNotificationManager
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 }
