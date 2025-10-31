@@ -5,18 +5,14 @@ import android.net.Uri
 import android.provider.ContactsContract
 import com.example.mymessage.data.model.Contact
 import com.example.mymessage.util.observe
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-@Singleton
-class ContactsRepository @Inject constructor(
-    @ApplicationContext private val context: Context
+class ContactsRepository(
+    private val context: Context
 ) {
     private val resolver = context.contentResolver
 

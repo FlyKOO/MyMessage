@@ -9,9 +9,6 @@ import com.example.mymessage.data.SmsRepository
 import com.example.mymessage.data.model.Contact
 import com.example.mymessage.data.model.ConversationMessage
 import com.example.mymessage.data.model.ConversationSummary
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,11 +17,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val smsRepository: SmsRepository,
     private val contactsRepository: ContactsRepository,
-    @ApplicationContext private val context: Context
+    private val context: Context
 ) : ViewModel() {
 
     private val _selectedThreadId = MutableStateFlow<Long?>(null)

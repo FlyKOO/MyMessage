@@ -5,13 +5,9 @@ import android.content.Intent
 import android.os.IBinder
 import android.provider.Telephony
 import android.telephony.SmsMessage
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.example.mymessage.di.AppDependencies
 
-@AndroidEntryPoint
 class MessagingService : Service() {
-
-    @Inject lateinit var notificationManager: SmsNotificationManager
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && (intent.action == Telephony.Sms.Intents.SMS_DELIVER_ACTION || intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION)) {
@@ -27,7 +23,7 @@ class MessagingService : Service() {
         val address = messages.first().displayOriginatingAddress
         val body = messages.joinToString("\n") { it.displayMessageBody }
         val threadId = Telephony.Threads.getOrCreateThreadId(this, address)
-        notificationManager.showIncomingMessage(threadId, address, body)
+        AppDependencies.smsNotificationManager(this).showIncomingMessage(threadId, address, body)
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

@@ -16,12 +16,13 @@ import androidx.compose.ui.Modifier
 import com.example.mymessage.ui.MyMessageRoot
 import com.example.mymessage.ui.permissions.rememberRequiredPermissionsState
 import com.example.mymessage.ui.theme.MyMessageTheme
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.mymessage.di.AppDependencies
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels {
+        AppDependencies.mainViewModelFactory(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,20 +3,17 @@ package com.example.mymessage.sms
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.example.mymessage.di.AppDependencies
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class DirectReplyReceiver : BroadcastReceiver() {
-
-    @Inject lateinit var smsRepository: com.example.mymessage.data.SmsRepository
-    @Inject lateinit var notificationManager: SmsNotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION_DIRECT_REPLY) return
+        val smsRepository = AppDependencies.smsRepository(context)
+        val notificationManager = AppDependencies.smsNotificationManager(context)
         val result = notificationManager.handleDirectReply(intent) ?: return
         val (threadId, reply) = result
         val address = intent.getStringExtra(EXTRA_ADDRESS) ?: return

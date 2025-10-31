@@ -1,7 +1,11 @@
 package com.example.mymessage
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.mymessage.di.AppDependencies
 
-@HiltAndroidApp
-class MyMessageApp : Application()
+class MyMessageApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AppDependencies.initialize(this)
+    }
+}
