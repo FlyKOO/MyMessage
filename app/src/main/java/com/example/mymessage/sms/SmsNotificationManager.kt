@@ -11,16 +11,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import com.example.mymessage.MainActivity
 import com.example.mymessage.R
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
 private const val CHANNEL_ID = "sms_channel"
 private const val KEY_TEXT_REPLY = "key_text_reply"
 
-@Singleton
-class SmsNotificationManager @Inject constructor(
-    @ApplicationContext private val context: Context
+class SmsNotificationManager(
+    private val context: Context
 ) {
 
     private val notificationManager
