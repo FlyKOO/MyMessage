@@ -58,10 +58,19 @@ fun MyMessageRoot(
     val conversations by mainViewModel.conversations.collectAsState()
     val messages by mainViewModel.messages.collectAsState()
     val isDefaultSmsApp by mainViewModel.isDefaultSmsApp.collectAsState()
+    val selectedThreadId by mainViewModel.selectedThreadId.collectAsState()
 
     LaunchedEffect(pendingAddress) {
         pendingAddress?.let { address ->
             navController.navigate(RouteNewMessage) {
+                launchSingleTop = true
+            }
+        }
+    }
+
+    LaunchedEffect(selectedThreadId) {
+        selectedThreadId?.let { threadId ->
+            navController.navigate("conversation/$threadId") {
                 launchSingleTop = true
             }
         }
@@ -88,11 +97,9 @@ fun MyMessageRoot(
         isDefaultSmsApp = isDefaultSmsApp,
         onConversationSelected = {
             mainViewModel.selectThread(it.threadId)
-            navController.navigate("conversation/${it.threadId}")
         },
         onContactSelected = { contact ->
             mainViewModel.openConversationForAddress(contact.numbers.firstOrNull().orEmpty())
-            navController.navigate(RouteNewMessage)
         },
         onComposeRequested = {
             navController.navigate(RouteNewMessage)
