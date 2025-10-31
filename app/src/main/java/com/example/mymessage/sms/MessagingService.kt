@@ -3,13 +3,18 @@ package com.example.mymessage.sms
 import android.content.Intent
 import android.provider.Telephony
 import android.telephony.SmsMessage
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 
-@AndroidEntryPoint
 class MessagingService : Telephony.SmsReceiverService() {
-
-    @Inject lateinit var notificationManager: SmsNotificationManager
+    private val notificationManager: SmsNotificationManager by lazy {
+        EntryPointAccessors.fromApplication(
+            applicationContext,
+            MessagingServiceEntryPoint::class.java
+        ).notificationManager()
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && (intent.action == Telephony.Sms.Intents.SMS_DELIVER_ACTION || intent.action == Telephony.Sms.Intents.SMS_RECEIVED_ACTION)) {
@@ -25,5 +30,11 @@ class MessagingService : Telephony.SmsReceiverService() {
         val body = messages.joinToString("\n") { it.displayMessageBody }
         val threadId = Telephony.Threads.getOrCreateThreadId(this, address)
         notificationManager.showIncomingMessage(threadId, address, body)
+    }
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface MessagingServiceEntryPoint {
+        fun notificationManager(): SmsNotificationManager
     }
 }
