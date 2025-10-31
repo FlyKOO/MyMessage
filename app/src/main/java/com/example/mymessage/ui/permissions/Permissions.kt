@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.example.mymessage.ui.permissions
 
 import androidx.compose.material3.AlertDialog
@@ -13,6 +15,7 @@ import com.example.mymessage.R
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlin.OptIn
 
 class RequiredPermissionsState(
     private val permissionsState: MultiplePermissionsState

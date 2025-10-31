@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +39,7 @@ private val timeFormatter = DateTimeFormatter.ofPattern("MM-dd HH:mm")
 private val zoneId = ZoneId.systemDefault()
 private fun Instant.formatConversationTime(): String = timeFormatter.format(this.atZone(zoneId))
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConversationScreen(
     threadId: Long?,
