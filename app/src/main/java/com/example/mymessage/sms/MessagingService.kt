@@ -1,13 +1,15 @@
 package com.example.mymessage.sms
 
+import android.app.Service
 import android.content.Intent
+import android.os.IBinder
 import android.provider.Telephony
 import android.telephony.SmsMessage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MessagingService : Telephony.SmsReceiverService() {
+class MessagingService : Service() {
 
     @Inject lateinit var notificationManager: SmsNotificationManager
 
@@ -16,7 +18,8 @@ class MessagingService : Telephony.SmsReceiverService() {
             val messages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
             handleMessages(messages)
         }
-        return super.onStartCommand(intent, flags, startId)
+        stopSelf(startId)
+        return START_NOT_STICKY
     }
 
     private fun handleMessages(messages: Array<SmsMessage>) {
@@ -26,4 +29,6 @@ class MessagingService : Telephony.SmsReceiverService() {
         val threadId = Telephony.Threads.getOrCreateThreadId(this, address)
         notificationManager.showIncomingMessage(threadId, address, body)
     }
+
+    override fun onBind(intent: Intent?): IBinder? = null
 }
